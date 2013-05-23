@@ -2,6 +2,9 @@ package com.example.APTest;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 public class MainActivity extends Activity
 {
@@ -11,5 +14,19 @@ public class MainActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+
+        Button testApButton = (Button)findViewById(R.id.testApButton);
+        Button sendEmailButton = (Button)findViewById(R.id.sendEmailButton);
+
+        EditText srcAddrEditText = (EditText) findViewById(R.id.srcAddrEditText);
+        EditText dstAddrEditText = (EditText) findViewById(R.id.dstAddrEditText);
+
+        testApButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("fuck you");
+            }
+        });
     }
 }

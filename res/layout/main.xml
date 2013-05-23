@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Test APs"
-        android:id="@+id/button"/>
+        android:id="@+id/testApButton"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -20,12 +20,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Src Email Address: "
-            android:id="@+id/textView"/>
+            android:id="@+id/srcAddrTextView"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editText"/>
+            android:id="@+id/srcAddrEditText"/>
     </LinearLayout>
 
     <LinearLayout
@@ -37,19 +37,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Dst Email Address: "
-            android:id="@+id/textView1"/>
+            android:id="@+id/dstAddrTextView"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editText1"/>
+            android:id="@+id/dstAddrEditText"/>
     </LinearLayout>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Send Email"
-        android:id="@+id/button1"/>
+        android:id="@+id/sendEmailButton"/>
 
 </LinearLayout>
 
