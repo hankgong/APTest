@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:background="@drawable/dialogbackground"
+              android:orientation="vertical"
+              android:paddingLeft="5dp"
+              android:paddingTop="5dp"
+              android:paddingRight="10dp"
+              android:paddingBottom="5dp">
+
+	<RelativeLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginRight="-5dp"
+		>
+
+		<ImageButton
+			android:id="@+id/closeDialogImageButton"
+			android:layout_width="45dp"
+			android:layout_height="45dp"
+			android:layout_gravity="right|center_vertical"
+			android:layout_alignParentRight="true"
+			android:background="@android:color/transparent"/>
+
+	</RelativeLayout>
+
+	<ListView
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:id="@+id/listView"/>
+
+	<ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView">
+
+	</ScrollView>
+
+</LinearLayout>
