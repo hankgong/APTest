@@ -25,7 +25,8 @@ public class MainActivity extends Activity
         testApButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("fuck you");
+                WirelessDialog wlDialog = new WirelessDialog(MainActivity.this);
+                wlDialog.show();
             }
         });
     }
