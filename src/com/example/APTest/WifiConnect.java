@@ -78,7 +78,7 @@ public class WifiConnect {
             return false;
         }
 
-        WifiConfiguration tempConfig = this.isExsits(SSID);
+        WifiConfiguration tempConfig = this.isExists(SSID);
 
         if(tempConfig != null) {
             mWifiManager.removeNetwork(tempConfig.networkId);
@@ -112,7 +112,7 @@ public class WifiConnect {
     }
 
     //check if the network is already saved in config file
-    private WifiConfiguration isExsits(String SSID)
+    private WifiConfiguration isExists(String SSID)
     {
         List<WifiConfiguration> existingConfigs = mWifiManager.getConfiguredNetworks();
         for (WifiConfiguration existingConfig : existingConfigs) {

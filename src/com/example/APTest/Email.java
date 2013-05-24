@@ -41,14 +41,15 @@ public class Email extends javax.mail.Authenticator{
 
     public Email() {
         //mSmtpServer = "smtp.gmail.com"; // default smtp server
-        mSmtpServer = "smtp.mail.yahoo.com"; // default smtp server
-        mSmtpPort = "465"; // default smtp port
+        mSmtpServer = "mail.avi-electronics.com"; // default smtp server
+        //mSmtpPort = "465"; // default smtp port
+        mSmtpPort = "8885"; // default smtp port
         mSocketFactoryPort = "465"; // default socketfactory port
 
-        mUserName = "hankgong"; // username
-        mPassword = "82322289"; // password
+        mUserName = "hgong"; // username
+        mPassword = "Ethan1305"; // password
         mRecipientAddrs = new String[]{"hankgong@gmail.com", "hgong@avi-electronics.com"};
-        mSenderAddr = "hankgong@yahoo.com"; // email sent from
+        mSenderAddr = "hgong@avi-electronicw.com"; // email sent from
         mMailSubject = "Test sending"; // email subject
         mMailBody = "nothing but test..."; // email body
 

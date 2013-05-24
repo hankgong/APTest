@@ -76,7 +76,6 @@ public class WirelessDialog extends Dialog {
         }
 
 
-
         //mScanResults.add(new ScanResult());
 
         mListView = (ListView)findViewById(R.id.listView);
@@ -87,14 +86,17 @@ public class WirelessDialog extends Dialog {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                TextView apname = (TextView)view.findViewById(R.id.list2colsleft);
-
-                TextView capabilityView = (TextView)view.findViewById(R.id.list2colsright);
-
-                String capability = capabilityView.getText().toString();
+                TextView ssidTextView = (TextView)view.findViewById(R.id.list2colsleft);
+                TextView capabilityTextView = (TextView)view.findViewById(R.id.list2colsright);
+                String capability = capabilityTextView.getText().toString();
 
                 SingleAPDialog selectedAPDialog = new SingleAPDialog(getContext());
-                selectedAPDialog.setTitle("Selected AP");
+
+                //put contents into the dialog
+                System.out.println("WiFi1 " + ssidTextView.getText().toString());
+                selectedAPDialog.setApSsid(ssidTextView.getText().toString());
+                selectedAPDialog.setSecurityCapability(capability);
+
                 selectedAPDialog.show();
 
 

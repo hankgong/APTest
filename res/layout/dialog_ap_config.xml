@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Security"
+        android:text="Security Protocol"
         android:id="@+id/securityTextView"
         android:padding="5dp"/>
 
@@ -33,6 +33,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/passwordEditText"
+        android:padding="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status"
+        android:id="@+id/statusTextView"
         android:padding="5dp"/>
 
     <RelativeLayout
