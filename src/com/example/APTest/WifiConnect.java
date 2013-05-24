@@ -55,77 +55,75 @@ public class WifiConnect {
      */
     public boolean connect(String SSID, String password, WifiCipherType type)
     {
-        if(!this.openWifi())
-        {
+        if(!this.openWifi()){
             return false;           //wifi can't be enabled
         }
 
         Log.i("WiFi", "Enabling interface...");
-        //开启wifi功能需要一段时间(我在手机上测试一般需要1-3秒左右)，所以要等到wifi
-        //状态变成WIFI_STATE_ENABLED的时候才能执行下面的语句
-        while(mWifiManager.getWifiState() == WifiManager.WIFI_STATE_ENABLING )
-        {
-            try{
-                //为了避免程序一直while循环，让它睡个100毫秒在检测……
+        //It will take around 1-3 seconds to enable wifi, so use thread delay to check status WIFI_STATE_ENABLING
+        // until it works
+        while(mWifiManager.getWifiState() == WifiManager.WIFI_STATE_ENABLING ) {
+            try {
+                //checking with interval to avoid blocking the UI
                 Thread.currentThread();
                 Thread.sleep(100);
-            }
-            catch(InterruptedException ie){
+            } catch(InterruptedException ie) {
+                //nothing to do for now
             }
         }
 
-        WifiConfiguration wifiConfig = this.CreateWifiInfo(SSID, password, type);
-        //
-        if(wifiConfig == null)
-        {
+        WifiConfiguration wifiConfig = this.createWifiInfo(SSID, password, type);
+
+        if(wifiConfig == null) {
             return false;
         }
-        WifiConfiguration tempConfig = this.IsExsits(SSID);
 
-        if(tempConfig != null)
-        {
+        WifiConfiguration tempConfig = this.isExsits(SSID);
+
+        if(tempConfig != null) {
             mWifiManager.removeNetwork(tempConfig.networkId);
         }
 
-//	        try {
-//	        	//高级选项
-//	        	String ip  ="192.168.1.201";
-//	        	int networkPrefixLength =24;
-//	        	InetAddress intetAddress  = InetAddress.getByName(ip);
-//	        	int intIp = inetAddressToInt(intetAddress);
-//	        	String dns = (intIp & 0xFF ) + "." + ((intIp >> 8 ) & 0xFF) + "." + ((intIp >> 16 ) & 0xFF) + ".1";
-//	        	setIpAssignment("STATIC", wifiConfig); //"STATIC" or "DHCP" for dynamic setting
-//	        	setIpAddress(intetAddress, networkPrefixLength, wifiConfig);
-//	        	setGateway(InetAddress.getByName(dns), wifiConfig);
-//	        	setDNS(InetAddress.getByName(dns), wifiConfig);
-//	        } catch (Exception e) {
-//	        	// TODO: handle exception
-//	        	e.printStackTrace();
-//	        }
+        //static ip address setting
+        //try {
+        //    String ip  ="192.168.1.201";
+        //    int networkPrefixLength =24;
+        //    InetAddress intetAddress  = InetAddress.getByName(ip);
+        //    int intIp = inetAddressToInt(intetAddress);
+        //    String dns = (intIp & 0xFF ) + "." + ((intIp >> 8 ) & 0xFF) + "." + ((intIp >> 16 ) & 0xFF) + ".1";
+        //    setIpAssignment("STATIC", wifiConfig); //"STATIC" or "DHCP" for dynamic setting
+        //    setIpAddress(intetAddress, networkPrefixLength, wifiConfig);
+        //    setGateway(InetAddress.getByName(dns), wifiConfig);
+        //    setDNS(InetAddress.getByName(dns), wifiConfig);
+        //} catch (Exception e) {
+        //    // TODO: handle exception
+        //    e.printStackTrace();
+        //}
 
+        //don't care about previous saving, remove it and then add it again
+        Log.i("WiFi", "doing the association");
         int netID = mWifiManager.addNetwork(wifiConfig);
         boolean bRet = mWifiManager.enableNetwork(netID, true);
-//	    	mWifiManager.updateNetwork(wifiConfig);
 
+        if (bRet)
+            mWifiManager.saveConfiguration();
 
         return bRet;
     }
 
-    //查看以前是否也配置过这个网络
-    private WifiConfiguration IsExsits(String SSID)
+    //check if the network is already saved in config file
+    private WifiConfiguration isExsits(String SSID)
     {
         List<WifiConfiguration> existingConfigs = mWifiManager.getConfiguredNetworks();
-        for (WifiConfiguration existingConfig : existingConfigs)
-        {
-            if (existingConfig.SSID.equals("\""+SSID+"\""))
-            {
+        for (WifiConfiguration existingConfig : existingConfigs) {
+            if (existingConfig.SSID.equals("\""+SSID+"\"")) {
                 return existingConfig;
             }
         }
         return null;
     }
 
-    private WifiConfiguration CreateWifiInfo(String SSID, String Password, WifiCipherType Type)
+    private WifiConfiguration createWifiInfo(String SSID, String password, WifiCipherType type)
     {
         WifiConfiguration config = new WifiConfiguration();
         config.allowedAuthAlgorithms.clear();
@@ -134,15 +132,15 @@ public class WifiConnect {
         config.allowedPairwiseCiphers.clear();
         config.allowedProtocols.clear();
         config.SSID = "\"" + SSID + "\"";
-        if(Type == WifiCipherType.WIFICIPHER_NOPASS)
-        {
+
+        if(type == WifiCipherType.WIFICIPHER_NOPASS){
             config.wepKeys[0] = "";
             config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
             config.wepTxKeyIndex = 0;
         }
-        if(Type == WifiCipherType.WIFICIPHER_WEP)
-        {
-            config.preSharedKey = "\""+Password+"\"";
+
+        if(type == WifiCipherType.WIFICIPHER_WEP) {
+            config.preSharedKey = "\""+password+"\"";
             config.hiddenSSID = true;
             config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.SHARED);
             config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
@@ -152,9 +150,9 @@ public class WifiConnect {
             config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
             config.wepTxKeyIndex = 0;
         }
-        if(Type == WifiCipherType.WIFICIPHER_WPA)
-        {
-            config.preSharedKey = "\""+Password+"\"";
+
+        if(type == WifiCipherType.WIFICIPHER_WPA) {
+            config.preSharedKey = "\""+password+"\"";
             config.hiddenSSID = true;
             config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
             config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
@@ -164,16 +162,11 @@ public class WifiConnect {
             config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
             config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
             config.status = WifiConfiguration.Status.ENABLED;
-        }
-        else
-        {
+        } else {
             return null;
         }
         return config;
     }
-
-
-
 
 
     /***
@@ -191,7 +184,7 @@ public class WifiConnect {
                 ((addr[1] & 0xff) << 8) | (addr[0] & 0xff);
     }
 
-    public static void setIpAssignment(String assign, WifiConfiguration wifiConf)throws SecurityException, IllegalArgumentException,NoSuchFieldException, IllegalAccessException {
+    public static void setIpAssignment(String assign, WifiConfiguration wifiConf) throws SecurityException, IllegalArgumentException,NoSuchFieldException, IllegalAccessException {
         setEnumField(wifiConf, assign, "ipAssignment");
     }
 

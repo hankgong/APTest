@@ -42,22 +42,15 @@
         <Button
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="Forget"
-            android:id="@+id/forgetButton"
+            android:text="Cancel"
+            android:id="@+id/cancelButton"
             />
 
         <Button
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="Associate"
-            android:id="@+id/associateButton"
-            android:layout_centerHorizontal="true"/>
-
-        <Button
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="Save"
-            android:id="@+id/saveButton"
+            android:text="Connect"
+            android:id="@+id/connectButton"
             android:layout_alignParentRight="true"/>
     </RelativeLayout>
 

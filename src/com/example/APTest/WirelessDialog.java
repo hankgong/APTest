@@ -93,41 +93,10 @@ public class WirelessDialog extends Dialog {
 
                 String capability = capabilityView.getText().toString();
 
-                WifiConfiguration conf = new WifiConfiguration();
+                SingleAPDialog selectedAPDialog = new SingleAPDialog(getContext());
+                selectedAPDialog.setTitle("Selected AP");
+                selectedAPDialog.show();
 
-                conf.SSID = "\"" + apname.getText().toString() + "\"";
-
-                System.out.println("scan results...");
-                for (ScanResult sr: mScanResults) {
-                    System.out.println(sr.BSSID);
-                }
-
-                System.out.println("configured results...");
-                for (WifiConfiguration wc: mWifi.getConfiguredNetworks()) {
-                    System.out.println(wc);
-                }
-
-                //decide how to handle the password depending on the capability type
-                if(capability.contains("WPA")) {
-
-                    conf.preSharedKey = "\"" + "Avi2Soft" + "\"";
-                } else if (capability.contains("WEP")) {
-
-                    //I don't know why it should be like the followings, just copied it
-                    conf.wepKeys[0] = "\"" + "Avi2Soft" + "\"";
-                    conf.wepTxKeyIndex = 0;
-                    conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
-                    conf.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
-
-                } else {
-
-                    conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
-                }
-
-                //when associate, it will use the number id not ssid
-
-                createDialog().show();
-                //mWifi.enableNetwork(conf.networkId, true);
 
             }
         });
